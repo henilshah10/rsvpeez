@@ -11,6 +11,7 @@ const RootLayout = () => {
             <main className="body_container">
                 <Outlet />
             </main>
+            <footer>Made with 💖 for togetherness.</footer>
         </>
     );
 };
