@@ -11,17 +11,20 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import CreateEvent from "./pages/CreateEvent";
 import AllEvents from "./pages/AllEvents";
-import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import ErrorPage from "./pages/ErrorPage";
+
+import { AuthProvider } from "./contexts/AuthContext";
+import { GlobalProvider } from "./contexts/GlobalContext";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path="/" element={<RootLayout />}>
-                <Route index element={<Home />} />
+                <Route path="home" element={<Home />} />
                 <Route path="createEvent" element={<CreateEvent />} />
                 <Route path="myEvents" element={<AllEvents />} />
-                <Route path="login" element={<Login />} />
+                <Route path="profile" element={<Profile />} />
                 <Route path="*" element={<ErrorPage />} />
             </Route>
         </>
@@ -29,7 +32,13 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-    return <RouterProvider router={router} />;
+    return (
+        <GlobalProvider>
+            <AuthProvider>
+                <RouterProvider router={router}></RouterProvider>
+            </AuthProvider>
+        </GlobalProvider>
+    );
 };
 
 export default App;

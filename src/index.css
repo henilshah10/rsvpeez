@@ -11,8 +11,16 @@
     text-align: center;
 }
 
+.header {
+    font-size: 24px;
+}
+
 .navbar {
     padding: 24px 48px;
+}
+
+.navbar > li {
+    color: #4285f4;
 }
 
 .body_container {
@@ -24,7 +32,7 @@
 }
 
 .link {
-    margin-left: 24px;
+    margin-left: 32px;
     cursor: pointer;
     text-decoration: none;
 }

@@ -1,23 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarPlus, faCircleUser, faSun, faMoon, faUserCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCalendarPlus, faUserCircle, faSun, faMoon } from "@fortawesome/free-regular-svg-icons";
+
+import AuthContext from "../contexts/AuthContext";
+import GlobalContext from "../contexts/GlobalContext";
 
 const NavigationBar = () => {
-    const [currentTheme, setCurrentTheme] = useState("dark");
-
-    const themeHandler = (e) => {
-        e.preventDefault();
-        setCurrentTheme(currentTheme === "light" ? "dark" : "light");
-    };
-
-    useEffect(() => {
-        document
-            .getElementsByTagName("html")[0]
-            .setAttribute("data-theme", currentTheme === "light" ? "dark" : "light");
-    }, [currentTheme]);
+    const { user } = useContext(AuthContext);
+    const { currentTheme, themeHandler } = useContext(GlobalContext);
 
     return (
         <nav className="navbar">
@@ -29,14 +22,18 @@ const NavigationBar = () => {
                 </li>
             </ul>
             <ul>
-                <li className="link">
-                    <Link to="createEvent">
+                <li style={{ padding: "0px" }}>
+                    <Link className="link" to="createEvent">
                         <FontAwesomeIcon size="xl" icon={faCalendarPlus} />
                     </Link>
                 </li>
-                <li>
-                    <Link className="link" to="login">
-                        <FontAwesomeIcon size="xl" icon={faUserCircle} />
+                <li style={{ padding: "0px" }}>
+                    <Link className="link" to="profile">
+                        {user ? (
+                            <img src={user.photoURL} alt="avatar" width={"40px"} style={{ borderRadius: "50%" }} />
+                        ) : (
+                            <FontAwesomeIcon size="xl" icon={faUserCircle} />
+                        )}
                     </Link>
                 </li>
                 <li className="link" onClick={themeHandler}>
