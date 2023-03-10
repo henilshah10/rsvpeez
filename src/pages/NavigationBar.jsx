@@ -38,7 +38,7 @@ const NavigationBar = () => {
                     </>
                 ) : (
                     <li className="link">
-                        <Link role="button" to="profile">
+                        <Link role="button" to="login">
                             Get Started
                         </Link>
                     </li>

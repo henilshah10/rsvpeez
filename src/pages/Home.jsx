@@ -8,19 +8,7 @@ import Welcome from "./Welcome";
 const Home = () => {
     const { user } = useContext(AuthContext);
 
-    return (
-        <>
-            {user ? (
-                <>
-                    <AllEvents />
-                </>
-            ) : (
-                <>
-                    <Welcome />
-                </>
-            )}
-        </>
-    );
+    return <>{user ? <AllEvents /> : <Welcome />}</>;
 };
 
 export default Home;

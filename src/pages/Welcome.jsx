@@ -45,7 +45,7 @@ const Welcome = () => {
                         A very intuitive way to manage all your RSVP Events and Occasions.
                     </p>
                     <div>
-                        <Link role="button" to="profile">
+                        <Link role="button" to="login">
                             Get Started
                         </Link>
                     </div>

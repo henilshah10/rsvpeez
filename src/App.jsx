@@ -13,6 +13,8 @@ import CreateEvent from "./pages/CreateEvent";
 import AllEvents from "./pages/AllEvents";
 import Profile from "./pages/Profile";
 import ErrorPage from "./pages/ErrorPage";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -25,6 +27,8 @@ const router = createBrowserRouter(
                 <Route index element={<Home />} />
                 <Route path="createEvent" element={<CreateEvent />} />
                 <Route path="myEvents" element={<AllEvents />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="*" element={<ErrorPage />} />
             </Route>
