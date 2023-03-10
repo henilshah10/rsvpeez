@@ -1,7 +1,21 @@
+import { useContext } from "react";
+
+import AuthContext from "../contexts/AuthContext";
+
+import AllEvents from "../pages/AllEvents";
+
 const Home = () => {
+    const { user } = useContext(AuthContext);
+
     return (
         <>
-            <p>Home</p>
+            {user ? (
+                <>
+                    <AllEvents />
+                </>
+            ) : (
+                <p>Default Home</p>
+            )}
         </>
     );
 };

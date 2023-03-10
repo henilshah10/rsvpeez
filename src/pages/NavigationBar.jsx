@@ -3,7 +3,8 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarPlus, faUserCircle, faSun, faMoon } from "@fortawesome/free-regular-svg-icons";
+import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 import AuthContext from "../contexts/AuthContext";
 import GlobalContext from "../contexts/GlobalContext";
@@ -22,22 +23,28 @@ const NavigationBar = () => {
                 </li>
             </ul>
             <ul>
-                <li style={{ padding: "0px" }}>
-                    <Link className="link" to="createEvent">
-                        <FontAwesomeIcon size="xl" icon={faCalendarPlus} />
-                    </Link>
-                </li>
-                <li style={{ padding: "0px" }}>
-                    <Link className="link" to="profile">
-                        {user ? (
-                            <img src={user.photoURL} alt="avatar" width={"40px"} style={{ borderRadius: "50%" }} />
-                        ) : (
-                            <FontAwesomeIcon size="xl" icon={faUserCircle} />
-                        )}
-                    </Link>
-                </li>
+                {user ? (
+                    <>
+                        <li style={{ padding: "0px" }}>
+                            <Link className="link" to="createEvent">
+                                <FontAwesomeIcon size="xl" icon={faCalendarPlus} />
+                            </Link>
+                        </li>
+                        <li style={{ padding: "0px" }}>
+                            <Link className="link" to="profile">
+                                <img src={user.photoURL} alt="avatar" width={"40px"} style={{ borderRadius: "50%" }} />
+                            </Link>
+                        </li>
+                    </>
+                ) : (
+                    <li className="link">
+                        <Link role="button" to="profile">
+                            Get Started
+                        </Link>
+                    </li>
+                )}
                 <li className="link" onClick={themeHandler}>
-                    <FontAwesomeIcon size="xl" icon={currentTheme === "dark" ? faMoon : faSun} />
+                    <FontAwesomeIcon size="xl" icon={currentTheme === "dark" ? faSun : faMoon} />
                 </li>
             </ul>
         </nav>
