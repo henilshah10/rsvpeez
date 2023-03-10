@@ -14,8 +14,9 @@ import AllEvents from "./pages/AllEvents";
 import Profile from "./pages/Profile";
 import ErrorPage from "./pages/ErrorPage";
 
-import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalProvider } from "./contexts/GlobalContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import { DbProvider } from "./contexts/DbContext";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,7 +36,9 @@ const App = () => {
     return (
         <GlobalProvider>
             <AuthProvider>
-                <RouterProvider router={router}></RouterProvider>
+                <DbProvider>
+                    <RouterProvider router={router} />
+                </DbProvider>
             </AuthProvider>
         </GlobalProvider>
     );

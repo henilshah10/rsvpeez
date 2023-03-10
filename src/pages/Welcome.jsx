@@ -1,12 +1,40 @@
+import { useContext, useState } from "react";
+
 import { Link } from "react-router-dom";
 
-import plan from "../assets/plan.png";
+import plan from "../assets/plan.svg";
 
 import gamenight from "../assets/gamenight.png";
 import party3 from "../assets/party3.png";
 import party4 from "../assets/party4.png";
+import DbContext from "../contexts/DbContext";
 
 const Welcome = () => {
+    const { submitQuery } = useContext(DbContext);
+
+    const [queryDetails, setQueryDetails] = useState({
+        name: "",
+        email: "",
+        query: "",
+    });
+
+    const handleQuery = (e) => {
+        e.preventDefault();
+
+        let errors = [];
+        for (let detail in queryDetails) {
+            if (queryDetails[detail] === "") {
+                errors.push(detail);
+            }
+        }
+
+        setFormErrors(errors);
+        console.log(queryDetails);
+        submitQuery(queryDetails);
+    };
+
+    const [formErrors, setFormErrors] = useState([]);
+
     return (
         <>
             <div className="center">
@@ -16,7 +44,7 @@ const Welcome = () => {
                     <p style={{ fontSize: "1rem", marginBottom: "24px" }}>
                         A very intuitive way to manage all your RSVP Events and Occasions.
                     </p>
-                    <div style={{ marginBottom: "48px" }}>
+                    <div>
                         <Link role="button" to="profile">
                             Get Started
                         </Link>
@@ -62,11 +90,40 @@ const Welcome = () => {
                 <p style={{ color: "gray" }}>Write it to us and we'll get back ASAP...</p>
                 <form>
                     <div className="grid">
-                        <input type="text" placeholder="Full Name" aria-label="Full Name" required />
-                        <input type="email" placeholder="Email address" aria-label="Email address" required />
+                        <input
+                            aria-invalid={
+                                formErrors.includes("name") ? true : queryDetails.name !== "" ? false : "default"
+                            }
+                            onChange={(e) => setQueryDetails({ ...queryDetails, name: e.target.value })}
+                            type="text"
+                            placeholder="Full Name"
+                            aria-label="Full Name"
+                            required
+                        />
+                        <input
+                            aria-invalid={
+                                formErrors.includes("email") ? true : queryDetails.email !== "" ? false : "default"
+                            }
+                            onChange={(e) => setQueryDetails({ ...queryDetails, email: e.target.value })}
+                            type="email"
+                            placeholder="Email address"
+                            aria-label="Email address"
+                            required
+                        />
                     </div>
-                    <input type="text" placeholder="Query" aria-label="Query" required />
-                    <button type="button">Send</button>
+                    <input
+                        aria-invalid={
+                            formErrors.includes("query") ? true : queryDetails.query !== "" ? false : "default"
+                        }
+                        onChange={(e) => setQueryDetails({ ...queryDetails, query: e.target.value })}
+                        type="text"
+                        placeholder="Query"
+                        aria-label="Query"
+                        required
+                    />
+                    <button onClick={handleQuery} type="submit">
+                        Send
+                    </button>
                 </form>
             </div>
         </>

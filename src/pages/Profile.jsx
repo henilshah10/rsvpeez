@@ -1,13 +1,18 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/fontawesome-free-brands";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
+import party from "../assets/party.svg";
+
 import GlobalContext from "../contexts/GlobalContext";
+import DbContext from "../contexts/DbContext";
 
 const Login = () => {
     const { currentTheme } = useContext(GlobalContext);
+    const { currentUserOnDb } = useContext(DbContext);
 
     const [loading, setloading] = useState(false);
     const { googleLogin, logOut, user } = useContext(AuthContext);
@@ -25,22 +30,38 @@ const Login = () => {
 
     const loginWidget = () => {
         return (
-            <div className="center" style={{ marginTop: "48px" }}>
-                <p className="header">Sign In to Create or Join Events</p>
-                <button
-                    style={{ marginTop: "48px", maxWidth: "400px", marginInline: "auto" }}
-                    className="contrast"
-                    onClick={loginHandler}
-                >
-                    <FontAwesomeIcon
-                        style={{ marginRight: "32px" }}
-                        color={currentTheme === "dark" ? "#333333" : "#eeeeee"}
-                        size="xl"
-                        icon={faGoogle}
-                    />
-                    Google Sign In
-                </button>
-            </div>
+            <main className="container">
+                <article className="grid login_article">
+                    <div>
+                        <p className="header">Sign In to Create or Join Events</p>
+                        <form style={{ marginBottom: "24px", borderBottom: "1px solid gray" }}>
+                            <input type="text" name="login" placeholder="Login" aria-label="Login" required />
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                aria-label="Password"
+                                required
+                            />
+                            <button type="submit" className="contrast">
+                                Login
+                            </button>
+                        </form>
+                        <button style={{ marginTop: "16px" }} className="contrast" onClick={loginHandler}>
+                            <FontAwesomeIcon
+                                style={{ marginRight: "32px" }}
+                                color={currentTheme === "dark" ? "#333333" : "#eeeeee"}
+                                size="xl"
+                                icon={faGoogle}
+                            />
+                            Google Sign In
+                        </button>
+                    </div>
+                    <div>
+                        <img />
+                    </div>
+                </article>
+            </main>
         );
     };
 
@@ -52,8 +73,9 @@ const Login = () => {
                         <img src={user.photoURL} alt="User Photo" width={"150px"} style={{ borderRadius: "50%" }} />
                     </div>
                     <div>
-                        <p>Name: {user.displayName}</p>
-                        <p>Email: {user.email}</p>
+                        <p>Name: {currentUserOnDb.Name}</p>
+                        <p>Email: {currentUserOnDb.Email}</p>
+                        <p>Events Hosted: {currentUserOnDb.EventsCreated}</p>
                     </div>
                 </div>
                 <button style={{ marginTop: "48px", maxWidth: "800px", marginInline: "auto" }} onClick={logOut}>
