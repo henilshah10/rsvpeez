@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 
 import { db } from "../firebase";
-import { addDoc, collection, doc, setDoc, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
 
 import AuthContext from "./AuthContext";
 
@@ -19,7 +19,7 @@ export function DbProvider({ children }) {
     }, [user]);
 
     const getUserInfo = () => {
-        const result = onSnapshot(doc(db, "Users", user.uid), (doc) => {
+        onSnapshot(doc(db, "Users", user.uid), (doc) => {
             setCurrentUserOnDb(doc.data());
         });
     };
@@ -32,7 +32,26 @@ export function DbProvider({ children }) {
         }
     };
 
-    const value = { currentUserOnDb, submitQuery };
+    const createNewEventOnDb = async (eventObject) => {
+        try {
+            // updating total events created by current firebase user
+            const userRef = doc(db, "Users", user.uid);
+            await updateDoc(userRef, {
+                eventsCreated: parseInt(currentUserOnDb.eventsCreated + 1),
+            });
+
+            // writing the new event on db
+            eventObject.uid = user.uid;
+            await addDoc(collection(db, "Events"), eventObject);
+
+            return 200;
+        } catch (e) {
+            console.log("Error Occurred in saving to db: " + e);
+            return 500;
+        }
+    };
+
+    const value = { currentUserOnDb, submitQuery, createNewEventOnDb };
 
     return <DbContext.Provider value={value}>{children}</DbContext.Provider>;
 }

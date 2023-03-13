@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { getAdditionalUserInfo } from "firebase/auth";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -24,9 +24,9 @@ export function AuthProvider({ children }) {
         try {
             if (firebaseUser !== null) {
                 const newUser = {
-                    Name: firebaseUser.displayName,
-                    Email: firebaseUser.email,
-                    EventsCreated: 0,
+                    name: firebaseUser.displayName,
+                    email: firebaseUser.email,
+                    eventsCreated: 0,
                 };
 
                 await setDoc(doc(db, "Users", firebaseUser.uid), newUser);
@@ -43,8 +43,8 @@ export function AuthProvider({ children }) {
                 createNewUserDocument(result.user);
             }
             return 200;
-        } catch (error) {
-            console.log(error);
+        } catch (e) {
+            console.log(e);
             return 500;
         }
     };

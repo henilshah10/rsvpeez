@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,16 +15,12 @@ const Login = () => {
 
     const { googleLogin } = useContext(AuthContext);
 
-    const [loading, setloading] = useState(false);
-
     const loginHandler = () => {
-        setloading(true);
         const status = googleLogin();
         status.then((s) => {
             if (s !== 200) {
                 console.log("Could'nt log in due to some error.");
             } else {
-                setloading(false);
                 navigate("/profile");
             }
         });

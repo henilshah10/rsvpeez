@@ -1,9 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIceCream, faMugHot, faChampagneGlasses, faCake, faGamepad } from "@fortawesome/free-solid-svg-icons";
 
+import DbContext from "../contexts/DbContext";
+
 const CreateEvent = () => {
+    const navigate = useNavigate();
+
+    const { createNewEventOnDb } = useContext(DbContext);
+
     const allArrangements = [
         { name: "iceCream", icon: faIceCream },
         { name: "beverages", icon: faMugHot },
@@ -79,7 +87,14 @@ const CreateEvent = () => {
         }
         setFormErrors(errors);
 
-        console.log(eventDetails);
+        const status = createNewEventOnDb(eventDetails);
+        status.then((s) => {
+            if (s !== 200) {
+                console.log("Could'nt log in due to some error.");
+            } else {
+                navigate("/");
+            }
+        });
     };
 
     return (

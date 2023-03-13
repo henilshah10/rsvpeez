@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/fontawesome-free-brands";
@@ -9,20 +9,20 @@ import GlobalContext from "../contexts/GlobalContext";
 import AuthContext from "../contexts/AuthContext";
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const { currentTheme } = useContext(GlobalContext);
 
     const { googleLogin } = useContext(AuthContext);
 
-    const [loading, setloading] = useState(false);
-
     const loginHandler = () => {
-        setloading(true);
         const status = googleLogin();
         status.then((s) => {
             if (s !== 200) {
-                console.log("Could'nt sign in due to some error.");
+                console.log("Could'nt log in due to some error.");
+            } else {
+                navigate("/profile");
             }
-            setloading(false);
         });
     };
 
@@ -44,7 +44,7 @@ const Register = () => {
                             required
                         />
                         <button style={{ marginBottom: "24px" }} type="submit" className="contrast">
-                            Login
+                            Register
                         </button>
                     </form>
                     <button style={{ marginTop: "24px" }} className="contrast" onClick={loginHandler}>

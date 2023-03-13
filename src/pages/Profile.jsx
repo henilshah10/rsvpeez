@@ -31,9 +31,9 @@ const Profile = () => {
                             <img src={user.photoURL} alt="User Photo" width={"150px"} style={{ borderRadius: "50%" }} />
                         </div>
                         <div>
-                            <p>Name: {currentUserOnDb.Name}</p>
-                            <p>Email: {currentUserOnDb.Email}</p>
-                            <p>Events Hosted: {currentUserOnDb.EventsCreated}</p>
+                            <p>Name: {currentUserOnDb.name}</p>
+                            <p>Email: {currentUserOnDb.email}</p>
+                            <p>Events Hosted: {currentUserOnDb.eventsCreated}</p>
                         </div>
                     </div>
                     <button
