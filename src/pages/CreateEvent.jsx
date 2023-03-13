@@ -64,13 +64,17 @@ const CreateEvent = () => {
         const value = e.target.id;
         const checked = e.target.checked;
 
+        let otherValue = "";
+
         if (checked) {
             if (!otherArrangements.includes(value)) {
-                setOtherArrangements([...otherArrangements, value]);
+                value === "veg" ? (otherValue = "Veg Food Available") : (otherValue = "BYOB Party");
+                setOtherArrangements([...otherArrangements, otherValue]);
             }
         } else {
             if (otherArrangements.includes(value)) {
-                setOtherArrangements(otherArrangements.filter((e) => e !== value));
+                value === "veg" ? (otherValue = "Veg Food Available") : (otherValue = "BYOB Party");
+                setOtherArrangements(otherArrangements.filter((e) => e !== otherValue));
             }
         }
     };
@@ -90,7 +94,7 @@ const CreateEvent = () => {
         const status = createNewEventOnDb(eventDetails);
         status.then((s) => {
             if (s !== 200) {
-                console.log("Could'nt log in due to some error.");
+                console.log("Could'nt create the event due to some error.");
             } else {
                 navigate("/");
             }

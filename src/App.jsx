@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import ErrorPage from "./pages/ErrorPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Invites from "./pages/Invites";
 
 import { GlobalProvider } from "./contexts/GlobalContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 <Route path="profile" element={<Profile />} />
+                <Route path="/invites/:id" element={<Invites />} />
                 <Route path="*" element={<ErrorPage />} />
             </Route>
         </>
