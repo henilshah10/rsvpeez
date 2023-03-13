@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,7 +13,13 @@ const Login = () => {
 
     const { currentTheme } = useContext(GlobalContext);
 
-    const { googleLogin } = useContext(AuthContext);
+    const { googleLogin, user } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (user !== null) {
+            navigate("profile");
+        }
+    }, [user]);
 
     const loginHandler = () => {
         const status = googleLogin();
