@@ -12,12 +12,9 @@ export function AuthProvider({ children }) {
     const googleProvider = new GoogleAuthProvider();
 
     useEffect(() => {
-        const unsub = onAuthStateChanged(auth, (currentUser) => {
+        onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
         });
-        return () => {
-            unsub();
-        };
     }, []);
 
     const createNewUserDocument = async (firebaseUser) => {
