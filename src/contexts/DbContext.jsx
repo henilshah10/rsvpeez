@@ -111,7 +111,6 @@ export function DbProvider({ children }) {
         createNewEventOnDb,
         getEventData,
         getAllEvents,
-        getEventData,
     };
 
     return <DbContext.Provider value={value}>{children}</DbContext.Provider>;
