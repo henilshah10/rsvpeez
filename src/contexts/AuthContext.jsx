@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithRedirect, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { getAdditionalUserInfo } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
 
     const googleLogin = async () => {
         try {
-            const result = await signInWithPopup(auth, googleProvider);
+            const result = await signInWithRedirect(auth, googleProvider);
             if (getAdditionalUserInfo(result).isNewUser) {
                 createNewUserDocument(result.user);
             }
